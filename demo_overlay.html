@@ -1,0 +1,143 @@
+<!doctype html>
+
+<!--
+	~ jquery.mb.components
+	~ Copyright (c) 2001-2011. Matteo Bicocchi (Pupunzi); Open lab srl, Firenze - Italy
+	~ email: mbicocchi@open-lab.com
+	~ site: http://pupunzi.com
+	~
+	~ Licences: MIT, GPL
+	~ http://www.opensource.org/licenses/mit-license.php
+	~ http://www.gnu.org/licenses/gpl.html
+	-->
+
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>mbZoomImage</title>
+	<style type="text/css">
+		body{
+			font-family:Arial, Helvetica, sans-serif;
+			background: #3e3e3e;
+		}
+		h3{
+			margin-bottom: 10px;
+		}
+		.wrapper{
+			background: #333333;
+			position:relative;
+			font-family:Arial, Helvetica, sans-serif;
+			margin:auto;
+			margin-top:90px;
+			width:800px;
+			padding: 20px;
+			color: #fff;
+			border-radius: 30px;
+			box-shadow: 0 0 5px rgba(0,0,0,.8);
+		}
+
+		span.btn{
+			padding:10px;
+			display:inline-block;
+			cursor:pointer;
+			font:12px/14px Arial, Helvetica, sans-serif;
+			-moz-border-radius:10px;
+			-webkit-border-radius:10px;
+			background-color: #666666;
+			color: #fff;
+			box-shadow:inset 0 0 2px rgba(0,0,0,.8);
+			border: 1px solid gray;
+
+		}
+		span.btn:hover{
+			background-color:#eee;
+			color: #333333;
+			box-shadow: 0 0 2px rgba(0,0,0,.8);
+		}
+
+		#thumbs img{
+			width: 800px;
+			cursor:url("css/zoomin.png"), -moz-zoom-in;
+			border: 1px solid gray;
+		}
+
+		.explanation b{
+			color:#999;
+		}
+		.explanation {
+			display:none;
+		}
+
+		#showExp{
+			position: absolute;
+			padding: 10px;
+			border-radius: 10px;
+			background: #333333;
+			display: inline-block;
+			font-size: 18px;
+			font-weight: bold;
+			color: #666666;
+			cursor: pointer;
+			margin: 5px;
+			right: 20px;
+			box-shadow:inset 0 0 4px rgba(0,0,0,.6);
+		}
+		#showExp:hover{
+			background: #fff;
+		}
+	</style>
+
+	<link rel="stylesheet" type="text/css" href="css/mb.zoomify.css" media="screen" />
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	<script type="text/javascript" src="inc/mb.zoomImg.js"></script>
+	<script type="text/javascript" src="inc/jquery.activity.min.js"></script>
+
+	<script type="text/javascript">
+		$(function(){
+			if (self.location.href == top.location.href){
+				$("body").css({font:"normal 13px/16px 'trebuchet MS', verdana, sans-serif"});
+				var logo=$("<a href='http://pupunzi.com/#mb.components/mb.gallery/gallery.html' style='position:absolute;top:10px;left:10px;z-index:1000'><img id='logo' border='0' src='http://pupunzi.com/images/logo.png' alt='mb.ideas.repository'></a>");
+				$("body").prepend(logo);
+				$("#logo").fadeIn();
+			}
+		});
+	</script>
+
+</head>
+<body>
+
+<div class="wrapper">
+	<h1>mb.zoomify.overlay.demo</h1>
+	<div id="thumbs">
+		<img  src="elements/18_self.jpg"  data-highres="elements/18_hr.jpg" onclick="$(this).mbZoomify_overlay({startLevel:2});">
+	</div>
+	click on an image to zoomify it.
+	<div id="showExp" onclick="if($('.explanation').is(':visible')){ $('.explanation').slideUp();} else {$('.explanation').slideDown();}">?</div>
+	<br>
+	<br>
+	<br>
+
+	<div class="explanation">
+		<h3>How to <img src="css/zoomin.png"> Zoom in:</h3>
+		1. <b>Double click</b> on the image to <b>zoom in to that point</b>.
+		<br>
+		2. Or hold down the <b></b> key (mac) or the <b>ctrl key</b> (PC) and <b>click</b> on the image.
+		<br>
+		3. Or hold down the <b>plus</b> key to increment the zoom.
+		<br>
+		4. Or hold down the <b></b> key (mac) or the <b>ctrl key</b> (PC) and use the <b>mouse wheel</b> (not in Firefox).
+
+		<h3>How to <img src="css/zoomOut.png"> Zoom out:</h3>
+		1. <b>Double click</b> on the zoomed image to <b>zoom out</b>.
+		<br>
+		2. Or hold down the <b> + alt</b> key (mac) or the <b>ctrl + alt</b> key (PC) and <b>click</b> on the image.
+		<br>
+		3. Or hold down <b>minus</b> key to decrement the zoom.
+		<br>
+		4. Or hold down the <b></b> key (mac) or the <b>ctrl key</b> (PC) and use the <b>mouse wheel</b> (not in Firefox).
+
+	</div>
+</div>
+
+</body>
+</html>

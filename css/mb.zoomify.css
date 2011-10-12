@@ -1,0 +1,69 @@
+/*mb.zoomify css property*/
+
+.zoomOverlay{
+	box-shadow: inset 0 0 20px rgba(0,0,0,.8);
+}
+
+.zoomWrapper{
+	/*border: 5px solid white;*/
+	/*box-sizing: border-box;*/
+}
+
+.zoomIn{
+	cursor:url("zoomin.png"), -moz-zoom-in !important;
+}
+
+.zoomOut{
+	cursor: url("zoomout.png"), -moz-zoom-in !important;
+}
+
+.move{
+	cursor: url("cursor-hand.png"), -moz-zoom-in;
+}
+
+#loader{
+	background: rgba(0,0,0,.5);
+}
+
+.zoomControls{
+	position:absolute;
+	top:0;
+	right:0;
+	padding: 10px;
+}
+
+.zoomInControl{
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	background: url("zoomin.png") no-repeat center center;
+	cursor: pointer;
+	opacity: .5;
+}
+
+.zoomOutControl{
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	background: url("zoomout.png") no-repeat center center;
+	cursor: pointer;
+	opacity: .5;
+}
+
+.zoomOutControl:hover, .zoomInControl:hover {
+	opacity: 1;
+}
+
+.zoomOutControl.disabled, .zoomInControl.disabled {
+	opacity: .2 !important;
+}
+
+.zoomScreenOver{
+	background: rgba(0,0,0,.5);
+}
+.zoomScreen{
+	width: 1200px;
+	height: 900px;
+	background: #000000;
+	border: 5px solid white;
+}
