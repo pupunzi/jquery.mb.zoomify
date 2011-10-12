@@ -43,11 +43,7 @@
 			zoomSteps:[1, 2, 3, 100],
 			screen:"self",
 			startLevel:0,
-			raster:false,
-			grayScale:false,
 			activateKeyboard:true,
-			origin:[0,0],
-			controls:"",
 			onStart:function(){},
 			onZoomIn:function(){},
 			onZoomOut:function(){}
@@ -256,7 +252,6 @@
 									$el.mbZoomify_zoom(true);
 								}).mousewheel(function(e, delta, deltaX, deltaY) {
 
-
 									if(e.metaKey && !$.browser.mozilla){
 										overlay.addClass("zoomIn");
 										mousePos(e);
@@ -325,17 +320,17 @@
 			}
 
 			if(el.zoomLevel>0){
-				overlay.removeClass("zoomIn");
 				overlay.addClass("move");
+				overlay.removeClass("zoomIn");
 				controls.find(".zoomOutControl").removeClass("disabled");
 				controls.find(".zoomInControl").removeClass("disabled");
 			}else{
 				overlay.removeClass("move");
+				overlay.removeClass("zoomOut");
 				overlay.addClass("zoomIn");
 				controls.find(".zoomInControl").removeClass("disabled");
 				controls.find(".zoomOutControl").addClass("disabled");
 			}
-
 
 			if (el.zoomLevel>el.opt.zoomSteps.length-1){
 				el.zoomLevel=el.opt.zoomSteps.length-1;
@@ -392,9 +387,7 @@
 				if(mt+overlay.height()/2 > h){
 					mt= (h/2)+((h-overlay.height())/2);
 				}
-
 			}
-
 			$el.mbZoomify_animate({width:w, height:h, marginLeft:-(ml), marginTop:-(mt)},800);
 		},
 
@@ -483,8 +476,42 @@
 				$(this).unbind(transitionEnd);
 				el.css(sfx+"transition","");
 			});
-		}
+		},
+		overlay:function(opt){
+			var el=this.get(0);
+			var $el=$(el);
 
+			if (opt=="destroy"){
+				$(".zoomScreenOver").fadeOut(1000,function(){
+					$(".zoomScreenOver").remove();
+				});
+				return;
+			}
+
+			var overlay=$("<div/>").addClass("zoomScreenOver");
+			overlay.css({position:"fixed", top:0, left:0, width:"100%", height:"100%"}).hide();
+			var screen=$("<div/>").addClass("zoomScreen");
+
+			$("body").append(overlay);
+			overlay.append(screen);
+			screen.css({position:"relative", top:"50%", left:"50%", marginLeft:-screen.width()/2, marginTop:-screen.height()/2});
+
+			overlay.fadeIn(function(){
+				$el.mbZoomify({screen:".zoomScreen",startLevel:opt.startLevel?opt.startLevel:0});
+			});
+
+			screen.bind("click",function(e){
+				e.preventDefault();
+				e.cancelBubble();
+			});
+			overlay.bind("click",function(e){
+
+				if ($(e.target).hasClass("zoomScreenOver"))
+					$el.mbZoomify_overlay("destroy");
+			})
+
+
+		}
 	};
 
 	// require jquery.activity.js
@@ -556,6 +583,7 @@
 	$.fn.mbZoomify_zoom = $.mbZoomify.zoom;
 	$.fn.mbZoomify_drag = $.mbZoomify.drag;
 	$.fn.mbZoomify_animate = $.mbZoomify.animate;
+	$.fn.mbZoomify_overlay = $.mbZoomify.overlay;
 
 	$.fn.showLoader=$.showLoader;
 	$.fn.hideLoader=$.hideLoader;
