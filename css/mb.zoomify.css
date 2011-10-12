@@ -57,13 +57,3 @@
 .zoomOutControl.disabled, .zoomInControl.disabled {
 	opacity: .2 !important;
 }
-
-.zoomScreenOver{
-	background: rgba(0,0,0,.5);
-}
-.zoomScreen{
-	width: 1200px;
-	height: 900px;
-	background: #000000;
-	border: 5px solid white;
-}
