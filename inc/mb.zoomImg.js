@@ -46,7 +46,8 @@
 			activateKeyboard:true,
 			onStart:function(){},
 			onZoomIn:function(){},
-			onZoomOut:function(){}
+			onZoomOut:function(){},
+			onDrag:function(){}
 		},
 		init:function(options){
 			var opt = {};
@@ -89,7 +90,6 @@
 					$el.parent().showLoader(function(){
 						$el.mbZoomify_run()
 					});
-
 				}else{
 					var screen = $(el.opt.screen).addClass("zoomWrapper");
 					var $elClone=$("<img>").attr("src",$el.attr("src")).data("highres",$el.data("highres"));
@@ -166,7 +166,6 @@
 						$("body").unselectable();
 
 						function mousePos(e){
-							/*mouse position*/
 							function relativeMousePos(){
 								/*
 								 * Convert the click position to the original image size
@@ -180,13 +179,6 @@
 							el.mousex = relativeMousePos().x;
 							el.mousey = relativeMousePos().y;
 
-							/*
-							 * altKey - alt/option key
-							 * ctrlKey - control key
-							 * shiftKey - shift key
-							 * metaKey - control key on PCs, control and/or command key on Macs
-							 */
-
 							var ml= parseFloat($el.css("margin-left"));
 							var mt= parseFloat($el.css("margin-top"));
 							el.origin={startX:e.pageX,startY:e.pageY, x:el.mousex, y:el.mousey, ml:ml, mt:mt};
@@ -196,6 +188,14 @@
 							el.candrag=false;
 
 						}).bind("keydown",function(e){
+
+									/*
+									 * altKey - alt/option key
+									 * ctrlKey - control key
+									 * shiftKey - shift key
+									 * metaKey - control key on PCs, control and/or command key on Macs
+									 */
+
 									if (e.metaKey && e.altKey){
 										overlay.addClass("zoomOut");
 									}else if (e.metaKey){
@@ -207,6 +207,7 @@
 								}).bind("keypress.mbZoomify",function(e){
 									var code = (e.keyCode ? e.keyCode : e.which);
 									switch(code){
+
 										case 43:
 											el.zoomLevel++;
 											$el.mbZoomify_zoom();
@@ -222,15 +223,16 @@
 							mousePos(e);
 							el.candrag=true;
 						}).bind("mousemove",function(e){
-									if(!el.candrag)
+
+									if(!el.candrag || e.metaKey)
 										return;
-									if(e.metaKey)
-										return;
+
 									var origin={
 										x:e.pageX,
 										y:e.pageY
 									};
 									$el.mbZoomify_drag(origin);
+
 								}).bind("click",function(e){
 									if (e.metaKey && e.altKey){
 										el.zoomLevel--;
@@ -283,7 +285,6 @@
 									}
 								});
 
-
 						outScreenImg.remove();
 
 						if (el.opt.startLevel){
@@ -295,6 +296,9 @@
 							overlay.addClass("zoomIn");
 						}
 
+						if(typeof el.opt.onStart == "function")
+							el.opt.onStart(el.origin);
+
 					}).appendTo("body");
 		},
 
@@ -304,6 +308,9 @@
 			var screen = $el.parent();
 			var overlay=screen.find(".zoomOverlay");
 			var controls= screen.find(".zoomControls");
+
+			if(!el.oldZoomLevel)
+				el.oldZoomLevel=0;
 
 			if(typeof manageOrigin == "string"){
 				el=$el.children("img").get(0);
@@ -388,7 +395,22 @@
 					mt= (h/2)+((h-overlay.height())/2);
 				}
 			}
-			$el.mbZoomify_animate({width:w, height:h, marginLeft:-(ml), marginTop:-(mt)},800);
+
+			var callback=function(){
+				if(el.oldZoomLevel<el.zoomLevel){
+					//zoomIn
+					if(typeof el.opt.onZoomIn=="function")
+						el.opt.onZoomIn(el.zoomLevel);
+				}
+				if(el.oldZoomLevel>el.zoomLevel){
+					//zoomOut
+					if(typeof el.opt.onZoomOut=="function")
+						el.opt.onZoomOut(el.zoomLevel);
+				}
+				el.oldZoomLevel = el.zoomLevel;
+			};
+
+			$el.mbZoomify_animate({width:w, height:h, marginLeft:-(ml), marginTop:-(mt)},false,800,callback);
 		},
 
 		drag:function(origin){
@@ -403,7 +425,6 @@
 
 			var w=$el.width();
 			var h=$el.height();
-
 
 			var ml= el.origin.ml + diffx;
 			var mt= el.origin.mt + diffy;
@@ -422,7 +443,12 @@
 			if(mt-screen.height()/2 < -h){
 				mt= -((h/2)+((h-screen.height())/2));
 			}
-			$el.mbZoomify_animate({marginLeft:ml, marginTop:mt},"cubic-bezier(0.36,0.01,0.00,0.99)",10);
+
+			if (typeof el.opt.onDrag == "function")
+				el.opt.onDrag(el.origin);
+
+//			$el.mbZoomify_animate({marginLeft:ml, marginTop:mt},"linear",100);
+			$el.css({marginLeft:ml, marginTop:mt});
 		},
 		destroy:function(){},
 
@@ -435,7 +461,6 @@
 			if(typeof type=="function"){
 				callback=type;
 			}
-
 			if(!duration)
 				duration=1000;
 
@@ -465,17 +490,19 @@
 				transitionEnd = "oTransitionEnd";
 			}
 
-			el.css(sfx+"transition-property","all"); //"opacity, left, top, width, height, marginLeft, marginTop"
+			el.css(sfx+"transition-property","all");
 			el.css(sfx+"transition-duration",duration+"ms");
 			el.css(sfx+"transition-timing-function",type);
-			//			el.css(sfx+"transition-delay",300);
+			el.css(opt);
 
-			el.css(opt).one(transitionEnd,function(){
+			el.get(0).addEventListener(transitionEnd, function(){
+				el.css(sfx+"transition","");
 				if(typeof callback=="function")
 					callback();
-				$(this).unbind(transitionEnd);
-				el.css(sfx+"transition","");
-			});
+				this.removeEventListener(transitionEnd);
+			}, true);
+
+
 		},
 		overlay:function(opt){
 			var el=this.get(0);
