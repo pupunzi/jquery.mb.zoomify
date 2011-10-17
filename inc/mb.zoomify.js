@@ -495,12 +495,13 @@
 			el.css(sfx+"transition-timing-function",type);
 			el.css(opt);
 
-			el.get(0).addEventListener(transitionEnd, function(){
-				el.css(sfx+"transition","");
-				if(typeof callback=="function")
-					callback();
-				this.removeEventListener(transitionEnd);
-			}, true);
+      var finalize = function(){
+        el.css(sfx+"transition","");
+        if(typeof callback=="function")
+          callback();
+        el.get(0).removeEventListener(transitionEnd, finalize, true);
+      };
+      el.get(0).addEventListener(transitionEnd, finalize, true);
 
 
 		},
