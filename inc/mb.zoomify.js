@@ -495,15 +495,6 @@
 			el.css(sfx+"transition-timing-function",type);
 			el.css(opt);
 
-<<<<<<< HEAD
-      var finalize = function(){
-        el.css(sfx+"transition","");
-        if(typeof callback=="function")
-          callback();
-        el.get(0).removeEventListener(transitionEnd, finalize, true);
-      };
-      el.get(0).addEventListener(transitionEnd, finalize, true);
-=======
 			var endTransition = function(){
 				el.css(sfx+"transition","");
 				if(typeof callback=="function")
@@ -511,7 +502,6 @@
 				el.get(0).removeEventListener(transitionEnd,endTransition,true);
 			};
 			el.get(0).addEventListener(transitionEnd, endTransition, true);
->>>>>>> evenListener fix
 
 
 		},
