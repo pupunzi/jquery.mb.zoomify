@@ -5,8 +5,6 @@
 }
 
 .zoomWrapper{
-	/*border: 5px solid white;*/
-	/*box-sizing: border-box;*/
 }
 
 .zoomIn{
@@ -58,12 +56,13 @@
 	opacity: .2 !important;
 }
 
-.zoomScreenOver{
+#zoomScreenOver{
 	background: rgba(0,0,0,.5);
 }
-.zoomScreen{
-	width: 1200px;
-	height: 900px;
+
+#zoomScreen{
+	width: 40%;
+	height: 60%;
 	background: #000000;
 	border: 5px solid white;
 }

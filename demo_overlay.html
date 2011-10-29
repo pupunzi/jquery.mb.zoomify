@@ -56,9 +56,11 @@
 		}
 
 		#thumbs img{
-			width: 800px;
+			height: 67px;
+			margin: 5px;
+			box-shadow: 0 0 5px rgba(0,0,0,.5);
+			border: 3px solid rgba(255,255,255,.5);
 			cursor:url("css/zoomin.png"), -moz-zoom-in;
-			border: 1px solid gray;
 		}
 
 		.explanation b{
@@ -109,7 +111,11 @@
 <div class="wrapper">
 	<h1>mb.zoomify.overlay.demo</h1>
 	<div id="thumbs">
-		<img  src="elements/18_self.jpg"  data-highres="elements/18_hr.jpg" onclick="$(this).mbZoomify_overlay({startLevel:2});">
+		<img  src="elements/17_lr.jpg"  data-highres="elements/17_hr.jpg" onclick="$(this).mbZoomify_overlay({startLevel:2});">
+		<img  src="elements/18_lr.jpg"  data-highres="elements/18_hr.jpg" onclick="$(this).mbZoomify_overlay({startLevel:1});">
+		<img  src="elements/19_lr.jpg"  data-highres="elements/19_hr.jpg" onclick="$(this).mbZoomify_overlay({startLevel:2});">
+		<img  src="elements/20_lr.jpg"  data-highres="elements/20_hr.jpg" onclick="$(this).mbZoomify_overlay({startLevel:0});">
+
 	</div>
 	click on an image to zoomify it.
 	<div id="showExp" onclick="if($('.explanation').is(':visible')){ $('.explanation').slideUp();} else {$('.explanation').slideDown();}">?</div>
