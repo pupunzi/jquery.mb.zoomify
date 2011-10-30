@@ -54,7 +54,7 @@
 (function($){
 
 	$.mbZoomify ={
-		name:"mb.bgndGallery",
+		name:"mb.mbZoomify",
 		author:"Matteo Bicocchi",
 		version:"1.0",
 		defaults:{
