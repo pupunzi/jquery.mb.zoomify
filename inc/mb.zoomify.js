@@ -91,6 +91,7 @@
                         position:$el.css("position")=="static"?"relative":$el.css("position"),
                         display:$el.css("display")=="inline"?"inline-block":"block"
                     });
+
                     $el.wrap(zoomWrapper);
 
                     $el.css({
