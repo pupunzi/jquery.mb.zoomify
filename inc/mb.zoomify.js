@@ -11,7 +11,7 @@
 
 /*
  * Name:jquery.mb.zoomify
- * Version: 1.0
+ * Version: 1.3
  *
  */
 
@@ -43,7 +43,7 @@
  * Licensed under the MIT license
  *
  * Author: Felix Gnass [fgnass at neteye dot de]
- * Version: 1.0.0
+ * Version: 1.1.0
  */
 (function(e){function i(b,a){var c=document.createElementNS("http://www.w3.org/2000/svg",b||"svg");a&&e.each(a,function(a,b){c.setAttributeNS(null,a,b)});return e(c)}e.fn.activity=function(b){this.each(function(){var a=e(this),c=a.data("activity");c&&(clearInterval(c.data("interval")),c.remove(),a.removeData("activity"));if(b!==false){b=e.extend({color:a.css("color")},e.fn.activity.defaults,b);var c=k(a,b).css("position","absolute").prependTo(b.outside?"body":a),d=a.outerHeight()-c.height(),f=a.outerWidth()- c.width(),d=b.valign=="top"?b.padding:b.valign=="bottom"?d-b.padding:Math.floor(d/2),f=b.align=="left"?b.padding:b.align=="right"?f-b.padding:Math.floor(f/2),g=a.offset();b.outside?c.css({top:g.top+"px",left:g.left+"px"}):(d-=c.offset().top-g.top,f-=c.offset().left-g.left);c.css({marginTop:d+"px",marginLeft:f+"px"});h(c,b.segments,Math.round(10/b.speed)/10);a.data("activity",c)}});return this};e.fn.activity.defaults={segments:12,space:3,length:7,width:4,speed:1.2,align:"center",valign:"center",padding:4}; e.fn.activity.getOpacity=function(b,a){var c=b.steps||b.segments-1,d=b.opacity!==void 0?b.opacity:1/c;return 1-Math.min(a,c)*(1-d)/c};var k=function(){return e("<div>").addClass("busy")},h=function(){};if(document.createElementNS&&document.createElementNS("http://www.w3.org/2000/svg","svg").createSVGRect)if(k=function(b,a){for(var c=a.width*2+a.space,d=c+a.length+Math.ceil(a.width/2)+1,f=i().width(d*2).height(d*2),g=i("g",{"stroke-width":a.width,"stroke-linecap":"round",stroke:a.color}).appendTo(i("g", {transform:"translate("+d+","+d+")"}).appendTo(f)),j=0;j<a.segments;j++)g.append(i("line",{x1:0,y1:c,x2:0,y2:c+a.length,transform:"rotate("+360/a.segments*j+", 0, 0)",opacity:e.fn.activity.getOpacity(a,j)}));return e("<div>").append(f).width(2*d).height(2*d)},document.createElement("div").style.WebkitAnimationName!==void 0)var l={},h=function(b,a,c){if(!l[a]){for(var d="spin"+a,f="@-webkit-keyframes "+d+" {",e=0;e<a;e++){var j=Math.round(1E5/a*e)/1E3,i=Math.round(1E5/a*(e+1)-1)/1E3,h="% { -webkit-transform:rotate("+ Math.round(360/a*e)+"deg); }\n";f+=j+h+i+h}f+="100% { -webkit-transform:rotate(100deg); }\n}";document.styleSheets[0].insertRule(f);l[a]=d}b.css("-webkit-animation",l[a]+" "+c+"s linear infinite")};else h=function(b,a,c){var d=0,e=b.find("g g").get(0);b.data("interval",setInterval(function(){e.setAttributeNS(null,"transform","rotate("+ ++d%a*(360/a)+")")},c*1E3/a))};else{var m=e("<shape>").css("behavior","url(#default#VML)");e("body").append(m);if(m.get(0).adj){var n=document.createStyleSheet();e.each(["group", "shape","stroke"],function(){n.addRule(this,"behavior:url(#default#VML);")});k=function(b,a){for(var c=a.width*2+a.space,d=(c+a.length+Math.ceil(a.width/2)+1)*2,f=-Math.ceil(d/2),f=e("<group>",{coordsize:d+" "+d,coordorigin:f+" "+f}).css({top:f,left:f,width:d,height:d}),g=0;g<a.segments;g++)f.append(e("<shape>",{path:"m "+c+",0 l "+(c+a.length)+",0"}).css({width:d,height:d,rotation:360/a.segments*g+"deg"}).append(e("<stroke>",{color:a.color,weight:a.width+"px",endcap:"round",opacity:e.fn.activity.getOpacity(a, g)})));return e("<group>",{coordsize:d+" "+d}).css({width:d,height:d,overflow:"hidden"}).append(f)};h=function(b,a,c){var d=0,e=b.get(0);b.data("interval",setInterval(function(){e.style.rotation=++d%a*(360/a)},c*1E3/a))}}e(m).remove()}})(jQuery);/******************************************************************************
  * end inclusion
@@ -55,7 +55,7 @@
 	$.mbZoomify ={
 		name:"mb.mbZoomify",
 		author:"Matteo Bicocchi",
-		version:"1.0",
+		version:"1.3",
 		defaults:{
 			zoomSteps:[1, 2, 3, 100],
 			screen:"self",
