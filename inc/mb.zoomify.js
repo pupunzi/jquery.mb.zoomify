@@ -150,7 +150,9 @@
 			var el=this.get(0);
 			var $el=$(el);
 			var screen=$el.parent();
-			var highRes = $el.data("highres") ? $("<img>").attr("src", $el.data("highres")) : $("<img>").attr("src", $el.attr("src"));
+			var rnd = "?_="+ new Date().getTime();
+
+			var highRes = $el.data("highres") ? $("<img>").attr("src", $el.data("highres")+rnd) : $("<img>").attr("src", $el.attr("src")+rnd);
 
       			var oCss={position:"absolute", width:"100%", height:"100%", top:0,left:0};
       			if($.browser.msie && $.browser.version<9)
