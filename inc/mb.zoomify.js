@@ -152,7 +152,12 @@
 			var screen=$el.parent();
 			var rnd = "?_="+ new Date().getTime();
 			var highRes = $el.data("highres") ? $("<img>").attr("src", $el.data("highres")+rnd) : $("<img>").attr("src", $el.attr("src")+rnd);
-			var overlay= $("<div/>").addClass("zoomOverlay").css({position:"absolute", width:"100%", height:"100%", top:0,left:0, opacity:0});
+
+      			var oCss={position:"absolute", width:"100%", height:"100%", top:0,left:0};
+      			if($.browser.msie && $.browser.version<9)
+      			oCss={position:"absolute", width:"100%", height:"100%", top:0,left:0, opacity:0, background:"#fff"};
+      
+			var overlay= $("<div/>").addClass("zoomOverlay").css(oCss);
 
 			var outScreenImg= highRes.addClass("zoomifyOutScreen").css({
 				position:"absolute",
