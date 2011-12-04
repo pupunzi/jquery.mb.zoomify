@@ -150,18 +150,18 @@
 			var el=this.get(0);
 			var $el=$(el);
 			var rnd = $.browser.msie ? "?_=" + new Date().getTime() : "";
-			var highRes = $el.data("highres") ? $("<img>").attr("src", $el.data("highres")+rnd) : $("<img>").attr("src", $el.attr("src")+rnd);
 
-			var oCss={position:"absolute", width:"100%", height:"100%", top:0,left:0};
-			if($.browser.msie && $.browser.version<9)
-				oCss={position:"absolute", width:"100%", height:"100%", top:0,left:0, opacity:0, background:"#fff"};
+			var oCss=$.browser.msie && $.browser.version<9
+					? {position:"absolute", width:"100%", height:"100%", top:0,left:0, opacity:0, background:"#fff"}
+					: {position:"absolute", width:"100%", height:"100%", top:0,left:0};
 
 			var overlay= $("<div/>").addClass("zoomOverlay").css(oCss);
 
-			var outScreenImg= highRes.addClass("zoomifyOutScreen").css({
+			var highRes =$("<img>");
+			highRes.addClass("zoomifyOutScreen").css({
 				position:"absolute",
-				left:-10000,
-				top:-10000
+				left:-5000,
+				top:-5000
 			}).load(function(){
 
 						el.minWidth=$el.width();
@@ -212,7 +212,6 @@
 
 						$(document).bind("mouseup",function(e){
 							el.candrag=false;
-
 						}).bind("keydown",function(e){
 
 									/*
@@ -315,7 +314,7 @@
 									}
 								});
 
-						outScreenImg.remove();
+						highRes.remove();
 
 						if (el.opt.startLevel){
 							setTimeout(function(){
@@ -329,7 +328,7 @@
 						if(typeof el.opt.onStart == "function")
 							el.opt.onStart(el.origin);
 
-					}).appendTo("body");
+					}).attr("src",$el.data("highres") ? $el.data("highres")+rnd : $el.data("highres")+rnd).appendTo("body");
 		},
 
 		zoom:function(manageOrigin){
