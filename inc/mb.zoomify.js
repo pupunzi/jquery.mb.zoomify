@@ -35,9 +35,9 @@
 
 
 /*******************************************************************************
- * inclusion jquery.activity.js
+ * inclusion spin.js
  *
- * NETEYE Activity Indicator jQuery Plugin
+ * NETEYE spin Plugin
  *
  * Copyright (c) 2010 NETEYE GmbH
  * Licensed under the MIT license
@@ -45,7 +45,9 @@
  * Author: Felix Gnass [fgnass at neteye dot de]
  * Version: 1.1.0
  */
-(function(e){function i(b,a){var c=document.createElementNS("http://www.w3.org/2000/svg",b||"svg");a&&e.each(a,function(a,b){c.setAttributeNS(null,a,b)});return e(c)}e.fn.activity=function(b){this.each(function(){var a=e(this),c=a.data("activity");c&&(clearInterval(c.data("interval")),c.remove(),a.removeData("activity"));if(b!==false){b=e.extend({color:a.css("color")},e.fn.activity.defaults,b);var c=k(a,b).css("position","absolute").prependTo(b.outside?"body":a),d=a.outerHeight()-c.height(),f=a.outerWidth()- c.width(),d=b.valign=="top"?b.padding:b.valign=="bottom"?d-b.padding:Math.floor(d/2),f=b.align=="left"?b.padding:b.align=="right"?f-b.padding:Math.floor(f/2),g=a.offset();b.outside?c.css({top:g.top+"px",left:g.left+"px"}):(d-=c.offset().top-g.top,f-=c.offset().left-g.left);c.css({marginTop:d+"px",marginLeft:f+"px"});h(c,b.segments,Math.round(10/b.speed)/10);a.data("activity",c)}});return this};e.fn.activity.defaults={segments:12,space:3,length:7,width:4,speed:1.2,align:"center",valign:"center",padding:4}; e.fn.activity.getOpacity=function(b,a){var c=b.steps||b.segments-1,d=b.opacity!==void 0?b.opacity:1/c;return 1-Math.min(a,c)*(1-d)/c};var k=function(){return e("<div>").addClass("busy")},h=function(){};if(document.createElementNS&&document.createElementNS("http://www.w3.org/2000/svg","svg").createSVGRect)if(k=function(b,a){for(var c=a.width*2+a.space,d=c+a.length+Math.ceil(a.width/2)+1,f=i().width(d*2).height(d*2),g=i("g",{"stroke-width":a.width,"stroke-linecap":"round",stroke:a.color}).appendTo(i("g", {transform:"translate("+d+","+d+")"}).appendTo(f)),j=0;j<a.segments;j++)g.append(i("line",{x1:0,y1:c,x2:0,y2:c+a.length,transform:"rotate("+360/a.segments*j+", 0, 0)",opacity:e.fn.activity.getOpacity(a,j)}));return e("<div>").append(f).width(2*d).height(2*d)},document.createElement("div").style.WebkitAnimationName!==void 0)var l={},h=function(b,a,c){if(!l[a]){for(var d="spin"+a,f="@-webkit-keyframes "+d+" {",e=0;e<a;e++){var j=Math.round(1E5/a*e)/1E3,i=Math.round(1E5/a*(e+1)-1)/1E3,h="% { -webkit-transform:rotate("+ Math.round(360/a*e)+"deg); }\n";f+=j+h+i+h}f+="100% { -webkit-transform:rotate(100deg); }\n}";document.styleSheets[0].insertRule(f);l[a]=d}b.css("-webkit-animation",l[a]+" "+c+"s linear infinite")};else h=function(b,a,c){var d=0,e=b.find("g g").get(0);b.data("interval",setInterval(function(){e.setAttributeNS(null,"transform","rotate("+ ++d%a*(360/a)+")")},c*1E3/a))};else{var m=e("<shape>").css("behavior","url(#default#VML)");e("body").append(m);if(m.get(0).adj){var n=document.createStyleSheet();e.each(["group", "shape","stroke"],function(){n.addRule(this,"behavior:url(#default#VML);")});k=function(b,a){for(var c=a.width*2+a.space,d=(c+a.length+Math.ceil(a.width/2)+1)*2,f=-Math.ceil(d/2),f=e("<group>",{coordsize:d+" "+d,coordorigin:f+" "+f}).css({top:f,left:f,width:d,height:d}),g=0;g<a.segments;g++)f.append(e("<shape>",{path:"m "+c+",0 l "+(c+a.length)+",0"}).css({width:d,height:d,rotation:360/a.segments*g+"deg"}).append(e("<stroke>",{color:a.color,weight:a.width+"px",endcap:"round",opacity:e.fn.activity.getOpacity(a, g)})));return e("<group>",{coordsize:d+" "+d}).css({width:d,height:d,overflow:"hidden"}).append(f)};h=function(b,a,c){var d=0,e=b.get(0);b.data("interval",setInterval(function(){e.style.rotation=++d%a*(360/a)},c*1E3/a))}}e(m).remove()}})(jQuery);/******************************************************************************
+(function(y,s,k){function l(d,a){var b=s.createElement(d||"div"),c;for(c in a)b[c]=a[c];return b}function i(d,a,b){b&&!b.parentNode&&i(d,b);d.insertBefore(a,b||null);return d}function z(d,a,b,c){var e=["opacity",a,~~(100*d),b,c].join("-"),b=0.01+100*(b/c),c=Math.max(1-(1-d)/a*(100-b),d),f=o.substring(0,o.indexOf("Animation")).toLowerCase();t[e]||(u.insertRule("@"+(f&&"-"+f+"-"||"")+"keyframes "+e+"{0%{opacity:"+c+"}"+b+"%{opacity:"+d+"}"+(b+0.01)+"%{opacity:1}"+(b+a)%100+"%{opacity:"+d+"}100%{opacity:"+ c+"}}",0),t[e]=1);return e}function q(d,a){var b=d.style,c,e;if(b[a]!==k)return a;a=a.charAt(0).toUpperCase()+a.slice(1);for(e=0;e<v.length;e++)if(c=v[e]+a,b[c]!==k)return c}function j(d,a){for(var b in a)d.style[q(d,b)||b]=a[b];return d}function A(d){for(var a=1;a<arguments.length;a++){var b=arguments[a],c;for(c in b)d[c]===k&&(d[c]=b[c])}return d}function w(d){for(var a={x:d.offsetLeft,y:d.offsetTop};d=d.offsetParent;)a.x+=d.offsetLeft,a.y+=d.offsetTop;return a}var v=["webkit","Moz","ms","O"],t= {},o,u=function(){var d=l("style");i(s.getElementsByTagName("head")[0],d);return d.sheet||d.styleSheet}(),r=function a(b){if(!this.spin)return new a(b);this.opts=A(b||{},a.defaults,B)},B=r.defaults={lines:12,length:7,width:5,radius:10,color:"#000",speed:1,trail:100,opacity:0.25,fps:20},p=r.prototype={spin:function(a){this.stop();var b=this,c=b.el=j(l(),{position:"relative"}),e,f;a&&(f=w(i(a,c,a.firstChild)),e=w(c),j(c,{left:(a.offsetWidth>>1)-e.x+f.x+"px",top:(a.offsetHeight>>1)-e.y+f.y+"px"}));c.setAttribute("aria-role", "progressbar");b.lines(c,b.opts);if(!o){var g=b.opts,m=0,x=g.fps,n=x/g.speed,h=(1-g.opacity)/(n*g.trail/100),k=n/g.lines;(function C(){m++;for(var a=g.lines;a;a--){var e=Math.max(1-(m+a*k)%n*h,g.opacity);b.opacity(c,g.lines-a,e,g)}b.timeout=b.el&&setTimeout(C,~~(1E3/x))})()}return b},stop:function(){var a=this.el;if(a)clearTimeout(this.timeout),a.parentNode&&a.parentNode.removeChild(a),this.el=k;return this}};p.lines=function(a,b){function c(a,c){return j(l(),{position:"absolute",width:b.length+b.width+ "px",height:b.width+"px",background:a,boxShadow:c,transformOrigin:"left",transform:"rotate("+~~(360/b.lines*e)+"deg) translate("+b.radius+"px,0)",borderRadius:(b.width>>1)+"px"})}for(var e=0,f;e<b.lines;e++)f=j(l(),{position:"absolute",top:1+~(b.width/2)+"px",transform:"translate3d(0,0,0)",opacity:b.opacity,animation:o&&z(b.opacity,b.trail,e,b.lines)+" "+1/b.speed+"s linear infinite"}),b.shadow&&i(f,j(c("#000","0 0 4px #000"),{top:"2px"})),i(a,i(f,c(b.color,"0 0 1px rgba(0,0,0,.1)")));return a};p.opacity= function(a,b,c){if(b<a.childNodes.length)a.childNodes[b].style.opacity=c};(function(){var a=j(l("group"),{behavior:"url(#default#VML)"});if(!q(a,"transform")&&a.adj){for(a=4;a--;)u.addRule(["group","roundrect","fill","stroke"][a],"behavior:url(#default#VML)");p.lines=function(b,a){function e(){return j(l("group",{coordsize:m+" "+m,coordorigin:-g+" "+-g}),{width:m,height:m})}function f(b,f,h){i(k,i(j(e(),{rotation:360/a.lines*b+"deg",left:~~f}),i(j(l("roundrect",{arcsize:1}),{width:g,height:a.width, left:a.radius,top:-a.width>>1,filter:h}),l("fill",{color:a.color,opacity:a.opacity}),l("stroke",{opacity:0}))))}var g=a.length+a.width,m=2*g,k=e(),n=~(a.length+a.radius+a.width)+"px",h;if(a.shadow)for(h=1;h<=a.lines;h++)f(h,-2,"progid:DXImageTransform.Microsoft.Blur(pixelradius=2,makeshadow=1,shadowopacity=.3)");for(h=1;h<=a.lines;h++)f(h);return i(j(b,{margin:n+" 0 0 "+n,zoom:1}),k)};p.opacity=function(a,c,e,f){var d;var b;a=a.firstChild;f=f.shadow&&f.lines||0;if(a&&c+f<a.childNodes.length&&(d=(b= (a=a.childNodes[c+f])&&a.firstChild,a=b)&&a.firstChild,a=d))a.opacity=e}}else o=q(a,"animation")})();y.Spinner=r})(window,document);
+
+/******************************************************************************
  * end inclusion
  */
 
@@ -581,9 +583,8 @@
 		$("#loader").remove(); // if loader still on page remove it
 		var loader=$("<div/>").attr("id","loader").css({position:"absolute",width:"100%", height:"100%", zIndex:10000}).hide();
 		$(this).append(loader);
-		$('#loader').activity({color: 'rgb(255,255,255)'});
 		$('#loader').fadeIn(1000, function(){
-
+			$('#loader').spin({color: 'rgb(255,255,255)'});
 			if(typeof fn ==="function")
 				fn();
 
@@ -600,32 +601,6 @@
 		});
 	};
 
-	function grayScaleImage(imgObj){
-		var canvas = document.createElement('canvas');
-		var canvasContext = canvas.getContext('2d');
-
-		var imgW = imgObj.width;
-		var imgH = imgObj.height;
-		canvas.width = imgW;
-		canvas.height = imgH;
-
-		canvasContext.drawImage(imgObj, 0, 0);
-		var imgPixels = canvasContext.getImageData(0, 0, imgW, imgH);
-
-		for(var y = 0; y < imgPixels.height; y++){
-			for(var x = 0; x < imgPixels.width; x++){
-				var i = (y * 4) * imgPixels.width + x * 4;
-				var avg = (imgPixels.data[i] + imgPixels.data[i + 1] + imgPixels.data[i + 2]) / 3;
-				imgPixels.data[i] = avg;
-				imgPixels.data[i + 1] = avg;
-				imgPixels.data[i + 2] = avg;
-			}
-		}
-		canvasContext.putImageData(imgPixels, 0, 0, 0, 0, imgPixels.width, imgPixels.height);
-		return canvas.toDataURL();
-	}
-
-
 	$.fn.unselectable=function(){
 		this.each(function(){
 			$(this).css({
@@ -635,6 +610,37 @@
 			}).attr("unselectable","on");
 		});
 		return $(this);
+	};
+
+
+/*SPINNER --------------------------------------------------------------------------*/
+
+	var spinnerOpts = {
+		lines: 14, // The number of lines to draw
+		length: 7, // The length of each line
+		width: 4, // The line thickness
+		radius: 14, // The radius of the inner circle
+		color: '#fff', // #rgb or #rrggbb
+		speed: 1, // Rounds per second
+		trail: 50, // Afterglow percentage
+		shadow: true // Whether to render a shadow
+	};
+
+	$.fn.spin = function(opt) {
+		this.each(function() {
+			var $this = $(this),
+					data = $this.data();
+
+			if (data.spinner) {
+				data.spinner.stop();
+				delete data.spinner;
+			}
+			if (spinnerOpts !== false) {
+				$.extend(spinnerOpts,opt);
+				data.spinner = new Spinner(spinnerOpts).spin(this);
+			}
+		});
+		return this;
 	};
 
 
