@@ -1,13 +1,15 @@
-/*! Copyright (c) 2010 Brandon Aaron (http://brandonaaron.net)
- * Licensed under the MIT License (LICENSE.txt).
+/*
+ * ******************************************************************************
+ *  jquery.mb.components
  *
- * Thanks to: http://adomas.org/javascript-mouse-wheel/ for some pointers.
- * Thanks to: Mathias Bank(http://www.mathias-bank.de) for a scope bug fix.
- * Thanks to: Seamus Leahy for adding deltaX and deltaY
+ *  Copyright (c) 2001-2013. Matteo Bicocchi (Pupunzi); Open lab srl, Firenze - Italy
+ *  email: matteo@open-lab.com
+ *  site: http://pupunzi.com
  *
- * Version: 3.0.4
- * 
- * Requires: 1.2.2+
+ *  Licences: MIT, GPL
+ *  http://www.opensource.org/licenses/mit-license.php
+ *  http://www.gnu.org/licenses/gpl.html
+ *  *****************************************************************************
  */
 
 (function($) {
