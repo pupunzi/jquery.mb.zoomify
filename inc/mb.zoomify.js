@@ -14,40 +14,49 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 07/01/14 22.50
+ *  last modified: 14/05/14 21.47
  *  *****************************************************************************
  */
 
-//(function(f){function c(a){var b=a||window.event,d=[].slice.call(arguments,1),e=0,c=0,g=0,a=f.event.fix(b);a.type="mousewheel";a.wheelDelta&&(e=a.wheelDelta/120);a.detail&&(e=-a.detail/3);g=e;b.axis!==void 0&&b.axis===b.HORIZONTAL_AXIS&&(g=0,c=-1*e);b.wheelDeltaY!==void 0&&(g=b.wheelDeltaY/120);b.wheelDeltaX!==void 0&&(c=-1*b.wheelDeltaX/120);d.unshift(a,e,c,g);return f.event.handle.apply(this,d)}var d=["DOMMouseScroll","mousewheel"];f.event.special.mousewheel={setup:function(){if(this.addEventListener)for(var a= d.length;a;)this.addEventListener(d[--a],c,false);else this.onmousewheel=c},teardown:function(){if(this.removeEventListener)for(var a=d.length;a;)this.removeEventListener(d[--a],c,false);else this.onmousewheel=null}};f.fn.extend({mousewheel:function(a){return a?this.bind("mousewheel",a):this.trigger("mousewheel")},unmousewheel:function(a){return this.unbind("mousewheel",a)}})})(jQuery);
+//(function(f){function c(a){var b=a||window.event,d=[].slice.call(arguments,1),e=0,c=0,g=0,a=f.event.fix(b);a.type="mousewheel";a.wheelDelta&&(e=a.wheelDelta/120);a.detail&&(e=-a.detail/3);g=e;b.axis!==void 0&&b.axis===b.HORIZONTAL_AXIS&&(g=0,c=-1*e);b.wheelDeltaY!==void 0&&(g=b.wheelDeltaY/120);b.wheelDeltaX!==void 0&&(c=-1*b.wheelDeltaX/120);d.unshift(a,e,c,g);return f.event.handle.apply(this,d)}var d=["DOMMouseScroll","mousewheel"];f.event.special.mousewheel={setup:function(){if(this.addEventListener)for(var a= d.length;a;)this.addEventListener(d[--a],c,false);else this.onmousewheel=c},teardown:function(){if(this.removeEventListener)for(var a=d.length;a;)this.removeEventListener(d[--a],c,false);else this.onmousewheel=null}};f.fn.extend({mousewheel:function(a){return a?this.on("mousewheel",a):this.trigger("mousewheel")},unmousewheel:function(a){return this.off("mousewheel",a)}})})(jQuery);
 /******************************************************************************
  * end inclusion
  */
 
 /*Browser detection patch*/
+var nAgt = navigator.userAgent;
 if (!jQuery.browser) {
 	jQuery.browser = {};
 	jQuery.browser.mozilla = !1;
 	jQuery.browser.webkit = !1;
 	jQuery.browser.opera = !1;
+	jQuery.browser.safari = !1;
+	jQuery.browser.chrome = !1;
 	jQuery.browser.msie = !1;
-	var nAgt = navigator.userAgent;
 	jQuery.browser.ua = nAgt;
 	jQuery.browser.name = navigator.appName;
 	jQuery.browser.fullVersion = "" + parseFloat(navigator.appVersion);
 	jQuery.browser.majorVersion = parseInt(navigator.appVersion, 10);
 	var nameOffset, verOffset, ix;
-	if (-1 != (verOffset = nAgt.indexOf("Opera")))jQuery.browser.opera = !0, jQuery.browser.name = "Opera", jQuery.browser.fullVersion = nAgt.substring(verOffset + 6), -1 != (verOffset = nAgt.indexOf("Version")) && (jQuery.browser.fullVersion = nAgt.substring(verOffset + 8)); else if (-1 != (verOffset = nAgt.indexOf("MSIE")))jQuery.browser.msie = !0, jQuery.browser.name = "Microsoft Internet Explorer", jQuery.browser.fullVersion = nAgt.substring(verOffset + 5); else if (-1 != nAgt.indexOf("Trident")) {
+	if (-1 != (verOffset = nAgt.indexOf("Opera")))jQuery.browser.opera = !0, jQuery.browser.name = "Opera", jQuery.browser.fullVersion = nAgt.substring(verOffset + 6), -1 != (verOffset = nAgt.indexOf("Version")) && (jQuery.browser.fullVersion = nAgt.substring(verOffset + 8)); else if (-1 != (verOffset = nAgt.indexOf("OPR")))jQuery.browser.opera = !0, jQuery.browser.name = "Opera", jQuery.browser.fullVersion = nAgt.substring(verOffset + 4); else if (-1 != (verOffset = nAgt.indexOf("MSIE")))jQuery.browser.msie = !0, jQuery.browser.name = "Microsoft Internet Explorer", jQuery.browser.fullVersion = nAgt.substring(verOffset + 5); else if (-1 != nAgt.indexOf("Trident")) {
 		jQuery.browser.msie = !0;
 		jQuery.browser.name = "Microsoft Internet Explorer";
 		var start = nAgt.indexOf("rv:") + 3, end = start + 4;
 		jQuery.browser.fullVersion = nAgt.substring(start, end)
-	} else-1 != (verOffset = nAgt.indexOf("Chrome")) ? (jQuery.browser.webkit = !0, jQuery.browser.name = "Chrome", jQuery.browser.fullVersion = nAgt.substring(verOffset + 7)) : -1 != (verOffset = nAgt.indexOf("Safari")) ? (jQuery.browser.webkit = !0, jQuery.browser.name = "Safari", jQuery.browser.fullVersion = nAgt.substring(verOffset + 7), -1 != (verOffset = nAgt.indexOf("Version")) && (jQuery.browser.fullVersion = nAgt.substring(verOffset + 8))) : -1 != (verOffset = nAgt.indexOf("AppleWebkit")) ? (jQuery.browser.webkit = !0, jQuery.browser.name = "Safari", jQuery.browser.fullVersion = nAgt.substring(verOffset + 7), -1 != (verOffset = nAgt.indexOf("Version")) && (jQuery.browser.fullVersion = nAgt.substring(verOffset + 8))) : -1 != (verOffset = nAgt.indexOf("Firefox")) ? (jQuery.browser.mozilla = !0, jQuery.browser.name = "Firefox", jQuery.browser.fullVersion = nAgt.substring(verOffset + 8)) : (nameOffset = nAgt.lastIndexOf(" ") + 1) < (verOffset = nAgt.lastIndexOf("/")) && (jQuery.browser.name = nAgt.substring(nameOffset, verOffset), jQuery.browser.fullVersion = nAgt.substring(verOffset + 1), jQuery.browser.name.toLowerCase() == jQuery.browser.name.toUpperCase() && (jQuery.browser.name = navigator.appName));
+	} else-1 != (verOffset = nAgt.indexOf("Chrome")) ? (jQuery.browser.webkit = !0, jQuery.browser.chrome = !0, jQuery.browser.name = "Chrome", jQuery.browser.fullVersion = nAgt.substring(verOffset + 7)) : -1 != (verOffset = nAgt.indexOf("Safari")) ? (jQuery.browser.webkit = !0, jQuery.browser.safari = !0, jQuery.browser.name = "Safari", jQuery.browser.fullVersion = nAgt.substring(verOffset + 7), -1 != (verOffset = nAgt.indexOf("Version")) && (jQuery.browser.fullVersion = nAgt.substring(verOffset + 8))) : -1 != (verOffset = nAgt.indexOf("AppleWebkit")) ? (jQuery.browser.webkit = !0, jQuery.browser.name = "Safari", jQuery.browser.fullVersion = nAgt.substring(verOffset + 7), -1 != (verOffset = nAgt.indexOf("Version")) && (jQuery.browser.fullVersion = nAgt.substring(verOffset + 8))) : -1 != (verOffset = nAgt.indexOf("Firefox")) ? (jQuery.browser.mozilla = !0, jQuery.browser.name = "Firefox", jQuery.browser.fullVersion = nAgt.substring(verOffset + 8)) : (nameOffset = nAgt.lastIndexOf(" ") + 1) < (verOffset = nAgt.lastIndexOf("/")) && (jQuery.browser.name = nAgt.substring(nameOffset, verOffset), jQuery.browser.fullVersion = nAgt.substring(verOffset + 1), jQuery.browser.name.toLowerCase() == jQuery.browser.name.toUpperCase() && (jQuery.browser.name = navigator.appName));
 	-1 != (ix = jQuery.browser.fullVersion.indexOf(";")) && (jQuery.browser.fullVersion = jQuery.browser.fullVersion.substring(0, ix));
 	-1 != (ix = jQuery.browser.fullVersion.indexOf(" ")) && (jQuery.browser.fullVersion = jQuery.browser.fullVersion.substring(0, ix));
 	jQuery.browser.majorVersion = parseInt("" + jQuery.browser.fullVersion, 10);
 	isNaN(jQuery.browser.majorVersion) && (jQuery.browser.fullVersion = "" + parseFloat(navigator.appVersion), jQuery.browser.majorVersion = parseInt(navigator.appVersion, 10));
-	jQuery.browser.version = jQuery.browser.majorVersion;
+	jQuery.browser.version = jQuery.browser.majorVersion
 }
+jQuery.browser.android = /Android/i.test(nAgt);
+jQuery.browser.blackberry = /BlackBerry/i.test(nAgt);
+jQuery.browser.ios = /iPhone|iPad|iPod/i.test(nAgt);
+jQuery.browser.operaMobile = /Opera Mini/i.test(nAgt);
+jQuery.browser.windowsMobile = /IEMobile/i.test(nAgt);
+jQuery.browser.mobile = jQuery.browser.android || jQuery.browser.blackberry || jQuery.browser.ios || jQuery.browser.windowsMobile || jQuery.browser.operaMobile;
+
 
 
 /*******************************************************************************
@@ -67,6 +76,12 @@ if (!jQuery.browser) {
  * end inclusion
  */
 
+/*
+ * jquery.mousewheel
+ * */
+
+(function(d){function e(a){var b=a||window.event,c=[].slice.call(arguments,1),f=0,e=0,g=0;a=d.event.fix(b);a.type="mousewheel";b.wheelDelta&&(f=b.wheelDelta/120);b.detail&&(f=-b.detail/3);g=f;void 0!==b.axis&&b.axis===b.HORIZONTAL_AXIS&&(g=0,e=-1*f);void 0!==b.wheelDeltaY&&(g=b.wheelDeltaY/120);void 0!==b.wheelDeltaX&&(e=-1*b.wheelDeltaX/120);c.unshift(a,f,e,g);return(d.event.dispatch||d.event.handle).apply(this,c)}var c=["DOMMouseScroll","mousewheel"];if(d.event.fixHooks)for(var h=c.length;h;)d.event.fixHooks[c[--h]]= d.event.mouseHooks;d.event.special.mousewheel={setup:function(){if(this.addEventListener)for(var a=c.length;a;)this.addEventListener(c[--a],e,!1);else this.onmousewheel=e},teardown:function(){if(this.removeEventListener)for(var a=c.length;a;)this.removeEventListener(c[--a],e,!1);else this.onmousewheel=null}};d.fn.extend({mousewheel:function(a){return a?this.bind("mousewheel",a):this.trigger("mousewheel")},unmousewheel:function(a){return this.unbind("mousewheel",a)}})})(jQuery);
+
 
 
 (function($){
@@ -74,9 +89,9 @@ if (!jQuery.browser) {
 	$.mbZoomify ={
 		name:"mb.mbZoomify",
 		author:"Matteo Bicocchi",
-		version:"1.7.0",
+		version:"1.7.1",
 		defaults:{
-			zoomSteps:[1, 2, 3, 100],
+			zoomSteps:[1, 1.5, 2, 2.5, 3, 3.5, 100],
 			screen:"self",
 			startLevel:0,
 			activateKeyboard:true,
@@ -119,6 +134,8 @@ if (!jQuery.browser) {
 						height:$el.height(),
 						left:"50%",
 						top:"50%",
+						minHeight:"none",
+						minWidth:"none",
 						marginLeft:-($el.width()/2),
 						marginTop:-($el.height()/2)
 					});
@@ -127,7 +144,9 @@ if (!jQuery.browser) {
 					$el.parent().showLoader(function(){
 						$el.mbZoomify_run()
 					});
+
 				}else{
+
 					var screen = $(el.opt.screen).addClass("zoomWrapper");
 					var $elClone=$("<img>").attr("src",$el.attr("src")).data("highres",$el.data("highres"));
 					$elClone.get(0).opt=opt;
@@ -135,6 +154,7 @@ if (!jQuery.browser) {
 						overflow:"hidden",
 						position:screen.css("position")=="static"?"relative":screen.css("position")
 					}).empty().append($elClone);
+
 					if(isVertical){
 						$elClone.css({
 							height:"100%",
@@ -148,11 +168,14 @@ if (!jQuery.browser) {
 							position:"absolute"
 						}).hide();
 					}
+
 					$elClone.css({
 						width:$elClone.width(),
 						height:$elClone.height(),
 						left:"50%",
 						top:"50%",
+						minHeight:"none",
+						minWidth:"none",
 						marginLeft:-($elClone.width()/2),
 						marginTop:-($elClone.height()/2)
 					});
@@ -180,174 +203,186 @@ if (!jQuery.browser) {
 			highRes.addClass("zoomifyOutScreen").css({
 				position:"absolute",
 				left:-5000,
-				top:-5000
+				top:-5000,
+				minHeight:"none",
+				minWidth:"none"
 			}).load(function(){
 
-						el.minWidth=$el.width();
-						el.minHeight=$el.height();
-						el.maxWidth=$(this).width();
-						el.maxHeight=$(this).height();
-						el.zoomLevel=0;
+				el.maxWidth=$(this).width();
+				el.maxHeight=$(this).height();
 
-						$el.trigger("originalReady",false);
-						$el.attr("src", highRes.attr("src"));
-						$el.parent().hideLoader();
-						$el.parent().append(overlay);
+				$.mbZoomify.setMaxMin(el);
 
-						var controls = $("<div/>").addClass("zoomControls");
-						var zoomin = $("<div/>").addClass("zoomInControl").bind("click",function(){
+				$(window).on("resize",function(){
+					$.mbZoomify.setMaxMin(el);
+					$el.mbZoomify_zoom();
+				});
+
+				el.zoomLevel=0;
+
+				$el.trigger("originalReady",false);
+
+				$el.attr("src", highRes.attr("src"));
+				$el.parent().hideLoader();
+				$el.parent().append(overlay);
+
+				var controls = $("<div/>").addClass("zoomControls");
+				var zoomin = $("<div/>").addClass("zoomInControl").on("click",function(){
+					if(!el.reachedMax)
+						++el.zoomLevel;
+					$el.mbZoomify_zoom();
+				});
+				var zoomout = $("<div/>").addClass("zoomOutControl").on("click",function(){
+					if(!el.reachedMin)
+						--el.zoomLevel;
+
+					$el.mbZoomify_zoom();
+				});
+				controls.append(zoomin).append(zoomout);
+				zoomout.addClass("disabled");
+
+				$el.parent().append(controls);
+
+				$("body").unselectable();
+
+				function mousePos(e){
+					function relativeMousePos(){
+						/*
+						 * Convert the click position to the original image size
+						 */
+						var mousex=e.pageX - $el.offset().left;
+						var mousey=e.pageY - $el.offset().top;
+						var x = (mousex * el.minWidth)/$el.width();
+						var y = (mousey * el.minHeight)/$el.height();
+						return {x:x, y:y};
+					}
+					el.mousex = relativeMousePos().x;
+					el.mousey = relativeMousePos().y;
+
+					var ml= parseFloat($el.css("margin-left"));
+					var mt= parseFloat($el.css("margin-top"));
+					el.origin={startX:e.pageX,startY:e.pageY, x:el.mousex, y:el.mousey, ml:ml, mt:mt};
+				}
+
+				$(document).on("mouseup",function(e){
+					el.candrag=false;
+				}).on("keydown",function(e){
+
+					/*
+					 * altKey - alt/option key
+					 * ctrlKey - control key
+					 * shiftKey - shift key
+					 * metaKey - control key on PCs, control and/or command key on Macs
+					 */
+
+					if (e.metaKey && e.altKey){
+						overlay.addClass("zoomOut");
+					}else if (e.metaKey){
+						overlay.addClass("zoomIn");
+					}
+				}).on("keyup",function(e){
+					if (!e.metaKey && el.zoomLevel>0)
+						overlay.removeClass("zoomIn zoomOut");
+				}).on("keypress.mbZoomify",function(e){
+
+					if(!el.opt.activateKeyboard)
+						return;
+
+					var code = (e.keyCode ? e.keyCode : e.which);
+					switch(code){
+
+						case 43:
 							el.zoomLevel++;
 							$el.mbZoomify_zoom();
-						});
-						var zoomout = $("<div/>").addClass("zoomOutControl").bind("click",function(){
+							break;
+
+						case 45:
 							el.zoomLevel--;
 							$el.mbZoomify_zoom();
-						});
-						controls.append(zoomin).append(zoomout);
-						zoomout.addClass("disabled");
+							break;
+					}
+				});
+				overlay.on("mousedown",function(e){
+					mousePos(e);
+					el.candrag=true;
+				}).on("mousemove",function(e){
 
-						$el.parent().append(controls);
+					if(!el.candrag || e.metaKey)
+						return;
 
-						$("body").unselectable();
+					var origin={
+						x:e.pageX,
+						y:e.pageY
+					};
+					$el.mbZoomify_drag(origin);
 
-						function mousePos(e){
-							function relativeMousePos(){
-								/*
-								 * Convert the click position to the original image size
-								 */
-								var mousex=e.pageX - $el.offset().left;
-								var mousey=e.pageY - $el.offset().top;
-								var x = (mousex * el.minWidth)/$el.width();
-								var y = (mousey * el.minHeight)/$el.height();
-								return {x:x, y:y};
-							}
-							el.mousex = relativeMousePos().x;
-							el.mousey = relativeMousePos().y;
+				}).on("click",function(e){
+					if (e.metaKey && e.altKey){
+						el.zoomLevel--;
+						$el.mbZoomify_zoom(true);
+					}else if (e.metaKey){
+						el.zoomLevel++;
+						$el.mbZoomify_zoom(true);
+					}else if(el.zoomLevel==0){
+						el.zoomLevel++;
+						$el.mbZoomify_zoom(true);
+					}
+				}).on("dblclick",function(){
 
-							var ml= parseFloat($el.css("margin-left"));
-							var mt= parseFloat($el.css("margin-top"));
-							el.origin={startX:e.pageX,startY:e.pageY, x:el.mousex, y:el.mousey, ml:ml, mt:mt};
+					if(el.zoomLevel==el.opt.zoomSteps.length-1){
+						el.zoomLevel=0;
+					}else{
+						el.zoomLevel=el.opt.zoomSteps.length-1;
+					}
+					$el.mbZoomify_zoom(true);
+				}).mousewheel(function(e, delta, deltaX, deltaY) {
+
+					if(e.metaKey && !$.browser.mozilla){
+						overlay.addClass("zoomIn");
+						mousePos(e);
+						if (deltaY >0.3 && !el.zooming){
+							el.zooming=true;
+							el.zoomLevel=el.opt.zoomSteps.length-1;
+							$el.mbZoomify_zoom(true);
+						}else if (deltaY < -0.3 && !el.zooming){
+							overlay.addClass("zoomOut");
+							el.zooming=true;
+							el.zoomLevel=0;
+							$el.mbZoomify_zoom(true);
+						}else if (deltaY > 0.2 && !el.zooming){
+							el.zooming=true;
+							el.zoomLevel++;
+							$el.mbZoomify_zoom(true);
 						}
-
-						$(document).bind("mouseup",function(e){
-							el.candrag=false;
-						}).bind("keydown",function(e){
-
-									/*
-									 * altKey - alt/option key
-									 * ctrlKey - control key
-									 * shiftKey - shift key
-									 * metaKey - control key on PCs, control and/or command key on Macs
-									 */
-
-									if (e.metaKey && e.altKey){
-										overlay.addClass("zoomOut");
-									}else if (e.metaKey){
-										overlay.addClass("zoomIn");
-									}
-								}).bind("keyup",function(e){
-									if (!e.metaKey && el.zoomLevel>0)
-										overlay.removeClass("zoomIn zoomOut");
-								}).bind("keypress.mbZoomify",function(e){
-
-									if(!el.opt.activateKeyboard)
-										return;
-
-									var code = (e.keyCode ? e.keyCode : e.which);
-									switch(code){
-
-										case 43:
-											el.zoomLevel++;
-											$el.mbZoomify_zoom();
-											break;
-
-										case 45:
-											el.zoomLevel--;
-											$el.mbZoomify_zoom();
-											break;
-									}
-								});
-						overlay.bind("mousedown",function(e){
-							mousePos(e);
-							el.candrag=true;
-						}).bind("mousemove",function(e){
-
-									if(!el.candrag || e.metaKey)
-										return;
-
-									var origin={
-										x:e.pageX,
-										y:e.pageY
-									};
-									$el.mbZoomify_drag(origin);
-
-								}).bind("click",function(e){
-									if (e.metaKey && e.altKey){
-										el.zoomLevel--;
-										$el.mbZoomify_zoom(true);
-									}else if (e.metaKey){
-										el.zoomLevel++;
-										$el.mbZoomify_zoom(true);
-									}else if(el.zoomLevel==0){
-										el.zoomLevel++;
-										$el.mbZoomify_zoom(true);
-									}
-								}).bind("dblclick",function(){
-
-									if(el.zoomLevel==el.opt.zoomSteps.length-1){
-										el.zoomLevel=0;
-									}else{
-										el.zoomLevel=el.opt.zoomSteps.length-1;
-									}
-									$el.mbZoomify_zoom(true);
-								}).mousewheel(function(e, delta, deltaX, deltaY) {
-
-									if(e.metaKey && !$.browser.mozilla){
-										overlay.addClass("zoomIn");
-										mousePos(e);
-										if (deltaY >0.3 && !el.zooming){
-											el.zooming=true;
-											el.zoomLevel=el.opt.zoomSteps.length-1;
-											$el.mbZoomify_zoom(true);
-										}else if (deltaY < -0.3 && !el.zooming){
-											overlay.addClass("zoomOut");
-											el.zooming=true;
-											el.zoomLevel=0;
-											$el.mbZoomify_zoom(true);
-										}else if (deltaY > 0.2 && !el.zooming){
-											el.zooming=true;
-											el.zoomLevel++;
-											$el.mbZoomify_zoom(true);
-										}
-										else if (deltaY < -0.2 && !el.zooming){
-											el.zooming=true;
-											overlay.addClass("zoomOut");
-											el.zoomLevel--;
-											$el.mbZoomify_zoom(true);
-										}else if(deltaY < 0.1 && deltaY > -0.1){
-											overlay.removeClass("zoomOut");
-											if (el.zooming) el.zooming=false;
-										}
-										e.stopPropagation();
-										e.preventDefault();
-									}
-								});
-
-						highRes.remove();
-
-						if (el.opt.startLevel){
-							setTimeout(function(){
-								el.zoomLevel=el.opt.startLevel;
-								$el.mbZoomify_zoom();
-							},1200);
-						}else{
-							overlay.addClass("zoomIn");
+						else if (deltaY < -0.2 && !el.zooming){
+							el.zooming=true;
+							overlay.addClass("zoomOut");
+							el.zoomLevel--;
+							$el.mbZoomify_zoom(true);
+						}else if(deltaY < 0.1 && deltaY > -0.1){
+							overlay.removeClass("zoomOut");
+							if (el.zooming) el.zooming=false;
 						}
+						e.stopPropagation();
+						e.preventDefault();
+					}
+				});
 
-						if(typeof el.opt.onStart == "function")
-							el.opt.onStart(el.origin);
+				highRes.remove();
 
-					}).attr("src",$el.data("highres") ? $el.data("highres")+rnd : $el.data("highres")+rnd).appendTo("body");
+				if (el.opt.startLevel){
+					setTimeout(function(){
+						el.zoomLevel=el.opt.startLevel;
+						$el.mbZoomify_zoom();
+					},1200);
+				}else{
+					overlay.addClass("zoomIn");
+				}
+
+				if(typeof el.opt.onStart == "function")
+					el.opt.onStart(el.origin);
+
+			}).attr("src",$el.data("highres") ? $el.data("highres")+rnd : $el.data("highres")+rnd).appendTo("body");
 		},
 
 		zoom:function(manageOrigin){
@@ -359,6 +394,7 @@ if (!jQuery.browser) {
 
 			if(!el.oldZoomLevel)
 				el.oldZoomLevel=0;
+
 
 			if(typeof manageOrigin == "string"){
 				el=$el.children("img").get(0);
@@ -387,8 +423,9 @@ if (!jQuery.browser) {
 				controls.find(".zoomOutControl").addClass("disabled");
 			}
 
+
 			if (el.zoomLevel>el.opt.zoomSteps.length-1){
-				el.zoomLevel=el.opt.zoomSteps.length-1;
+				el.zoomLevel = el.opt.zoomSteps.length-1;
 				$(document).trigger("maxzoom",false);
 			}
 
@@ -399,27 +436,36 @@ if (!jQuery.browser) {
 
 			var w=$el.width();
 			var h=$el.height();
+
 			w=el.minWidth*el.opt.zoomSteps[el.zoomLevel];
 			h=el.minHeight*el.opt.zoomSteps[el.zoomLevel];
 
 			if(w > el.maxWidth || h > el.maxHeight){
+				el.reachedMax = true;
 				w=el.maxWidth;
 				h=el.maxHeight;
-				el.zoomLevel=el.opt.zoomSteps.length-1;
+				//el.zoomLevel = el.opt.zoomSteps.length-1;
+				$(document).trigger("maxzoom",false);
+
 				controls.find(".zoomInControl").addClass("disabled");
+			}else{
+				el.reachedMax = false;
 			}
 
 			if(w<= el.minWidth || h<= el.minHeight){
 				w=el.minWidth;
 				h=el.minHeight;
 				el.zoomLevel=0;
+				el.reachedMin = true;
 				controls.find(".zoomOutControl").addClass("disabled");
+			} else{
+				el.reachedMin = false;
 			}
 
 			var ml=w/2;
 			var mt=h/2;
 
-			if(manageOrigin && el.zoomLevel > 0){
+			if(manageOrigin && el.zoomLevel > 0) {
 
 				var ratio= w/el.minWidth ;
 
@@ -498,6 +544,21 @@ if (!jQuery.browser) {
 //			$el.mbZoomify_animate({marginLeft:ml, marginTop:mt},"linear",100);
 			$el.css({marginLeft:ml, marginTop:mt});
 		},
+
+		setMaxMin: function(el){
+
+			var isVertical = el.maxWidth < el.maxHeight;
+			var $el = $(el);
+
+			if(!isVertical){
+				el.minWidth= $el.parents(".zoomWrapper").width();
+				el.minHeight=(el.minWidth * el.maxHeight)/ el.maxWidth;
+			}else{
+				el.minHeight=$el.parents(".zoomWrapper").height();
+				el.minWidth= (el.minHeight * el.maxWidth)/ el.maxHeight;
+			}
+		},
+
 		destroy:function(){},
 
 		animate:function(opt,duration, type, callback){
@@ -550,9 +611,9 @@ if (!jQuery.browser) {
 				el.get(0).removeEventListener(transitionEnd,endTransition,true);
 			};
 			el.get(0).addEventListener(transitionEnd, endTransition, true);
-
-
 		},
+
+
 		overlay:function(opt){
 			var el=this.get(0);
 			var $el=$(el);
@@ -572,9 +633,7 @@ if (!jQuery.browser) {
 			$("body").append(overlay);
 			overlay.append(screen);
 			overlay.css({opacity:0}).show();
-			screen.css({position:"relative", margin:"auto", marginTop:($(document).height()-screen.height())/2});
-
-//			screen.css({position:"relative", top:"50%", left:"50%", marginLeft:-screen.width()/2, marginTop:-screen.height()/2});
+			screen.css({position:"relative", margin:"auto", marginTop:($(window).height()-screen.height())/2});
 
 			overlay.fadeTo(1000,1,function(){
 				var options={};
@@ -582,11 +641,11 @@ if (!jQuery.browser) {
 				$el.mbZoomify(options);
 			});
 
-			screen.bind("click",function(e){
+			screen.on("click",function(e){
 				e.preventDefault();
 			});
-			overlay.bind("click",function(e){
 
+			overlay.on("click",function(e){
 				if ($(e.target).hasClass("zoomScreenOver"))
 					$el.mbZoomify_overlay("destroy");
 			})
@@ -594,6 +653,8 @@ if (!jQuery.browser) {
 
 		}
 	};
+
+
 
 	// require jquery.activity.js
 	$.showLoader=function(fn){
@@ -630,7 +691,7 @@ if (!jQuery.browser) {
 	};
 
 
-/*SPINNER --------------------------------------------------------------------------*/
+	/*SPINNER --------------------------------------------------------------------------*/
 
 	var spinnerOpts = {
 		lines: 14, // The number of lines to draw

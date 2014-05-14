@@ -14,7 +14,7 @@
  *  http://www.opensource.org/licenses/mit-license.php
  *  http://www.gnu.org/licenses/gpl.html
  *
- *  last modified: 07/01/14 22.50
+ *  last modified: 14/05/14 20.06
  *  *****************************************************************************
  */
 
@@ -41,6 +41,10 @@
 
 #loader{
 	background: rgba(0,0,0,.5);
+}
+
+img.zoomify{
+  cursor:url("zoomin.png"), -moz-zoom-in;
 }
 
 .zoomControls{
@@ -81,8 +85,8 @@
 }
 
 #zoomScreen{
-	width: 40%;
-	height: 60%;
+	width: 80%;
+	height: 80%;
 	background: #000000;
 	border: 5px solid white;
 }
