@@ -216,7 +216,9 @@ events.windowResize = hasTouch && isiOs ? "orientationchange" : "resize";
 						$el.attr("src", highRes.attr("src"));
 						$el.parent().hideLoader();
 						$el.parent().append(overlay);
-						$el.fadeTo(500,1);
+						setTimeout(function(){
+							$el.fadeTo(700,1);
+						},1000)
 
 						var controls = $("<div/>").addClass("zoomControls");
 						var zoomin = $("<div/>").addClass("zoomInControl").on(events.end,function(){
@@ -235,8 +237,6 @@ events.windowResize = hasTouch && isiOs ? "orientationchange" : "resize";
 						});
 
 						controls.append(zoomin).append(zoomout);
-
-						console.debug(el.opt.isOverlay)
 
 						if(el.opt.isOverlay)
 							controls.append(zoomclose);
@@ -271,42 +271,45 @@ events.windowResize = hasTouch && isiOs ? "orientationchange" : "resize";
 
 						$(document).on(events.end,function(e){
 							el.candrag=false;
-						}).on("keydown",function(e){
+						})
+						/*.on("keydown",function(e){
 
-									/*
-									 * altKey - alt/option key
-									 * ctrlKey - control key
-									 * shiftKey - shift key
-									 * metaKey - control key on PCs, control and/or command key on Macs
-									 */
+						 *//*
+						 * altKey - alt/option key
+						 * ctrlKey - control key
+						 * shiftKey - shift key
+						 * metaKey - control key on PCs, control and/or command key on Macs
+						 *//*
 
-									if (e.metaKey && e.altKey){
-										overlay.addClass("zoomOut");
-									}else if (e.metaKey){
-										overlay.addClass("zoomIn");
-									}
-								}).on("keyup",function(e){
-									if (!e.metaKey && el.zoomLevel>0)
-										overlay.removeClass("zoomIn zoomOut");
-								}).on("keypress.mbZoomify",function(e){
+						 if (e.metaKey && e.altKey){
+						 overlay.addClass("zoomOut");
+						 }else if (e.metaKey){
+						 overlay.addClass("zoomIn");
+						 }
+						 }).on("keyup",function(e){
+						 if (!e.metaKey && el.zoomLevel>0){
+						 overlay.removeClass("zoomIn zoomOut");
+						 overlay.addClass("zoomOut");
+						 }
+						 }).on("keypress.mbZoomify",function(e){
 
-									if(!el.opt.activateKeyboard)
-										return;
+						 if(!el.opt.activateKeyboard)
+						 return;
 
-									var code = (e.keyCode ? e.keyCode : e.which);
-									switch(code){
+						 var code = (e.keyCode ? e.keyCode : e.which);
+						 switch(code){
 
-										case 43:
-											el.zoomLevel++;
-											$el.mbZoomify_zoom();
-											break;
+						 case 43:
+						 el.zoomLevel++;
+						 $el.mbZoomify_zoom();
+						 break;
 
-										case 45:
-											el.zoomLevel--;
-											$el.mbZoomify_zoom();
-											break;
-									}
-								});
+						 case 45:
+						 el.zoomLevel--;
+						 $el.mbZoomify_zoom();
+						 break;
+						 }
+						 });*/
 
 						overlay.on(events.start,function(e){
 
